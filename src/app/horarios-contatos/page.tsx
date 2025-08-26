@@ -5,12 +5,11 @@ import { FaWhatsapp } from 'react-icons/fa';
 import { FaLocationDot } from 'react-icons/fa6';
 
 const horarios = [
-  { dia: 'Segunda à Quarta', horario: '08:00 às 18:00' },
-  { dia: 'Quinta', horario: '08:00 às 19:30' },
-  { dia: 'Sexta', horario: '08:00 às 19:00' },
+  { dia: 'Segunda à Sexta', horario: '08:00 às 17:00 (sem fechar ao meio-dia)' },
+
 ];
 
-export default function Page() {
+export default function HorariosContatosPage() {
   function handleEmailClick(valor: string) {
     window.open(`mailto:${valor}`, '_blank');
   };
@@ -62,7 +61,7 @@ export default function Page() {
           <div className='flex flex-col'>
             <h3 className="text-2xl font-bold">Imprensa</h3>
 
-            <div className='flex gap-2 items-center mt-2 cursor-pointer' onClick={() => handleEmailClick('simcacomunicacao@gmail.com')}>
+            <div className='flex gap-2 items-center mt-2 cursor-pointer' onClick={() => handleEmailClick('ascomsimca@gmail.com')}>
               <HiOutlineMail size={22}/>
               <span>simcacomunicacao@gmail.com</span>
             </div>

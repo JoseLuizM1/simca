@@ -11,8 +11,7 @@ export default function JoinSection() {
                     <span className="text-white text-xl">
                         Ao se filiar, você fortalece a luta por melhores condições de trabalho e direitos para todos os Servidores Públicos de Cachoeirinha.
                         <br />
-                        <br />
-                        O Sindicato é mais forte quando eu participo!
+
                     </span>
                 </div>
             </section>

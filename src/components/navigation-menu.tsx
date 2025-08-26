@@ -41,10 +41,6 @@ const menus: { title: string; href: string; components?: any }[] = [
     href: "/",
     components: [
       {
-        title: "Convênio Mercadão dos Óculos",
-        href: "/convenio",
-      },
-      {
         title: "Jurídico",
         href: "/juridico",
       },

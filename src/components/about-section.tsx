@@ -14,7 +14,7 @@ export default function AboutSection() {
           </span>
         </div>
 
-       <Image src="/bandeira.avif" alt="Sobre nós" width={500} height={300} priority className="h-auto w-auto" /> 
+       <Image src="/bandeiraaas2.jpg" alt="Sobre nós" width={500} height={300} priority className="h-auto w-auto" /> 
       </div>
     </section>
   );

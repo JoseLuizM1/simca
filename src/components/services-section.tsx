@@ -21,8 +21,7 @@ export default function ServicesSection() {
       <section className="text-center bg-red-700 w-[auto] h-[auto] p-8">
         <div className="container mx-auto flex flex-col gap-8 justify-center items-start p-8">
           <h2 className="text-white text-5xl font-bold ">
-            Quando você apoia o sindicato, apoia todos os direitos conquistados até aqui
-            e fortalece as lutas que virão
+            O SINDICATO É MAIS FORTE QUANDO EU PARTICIPO!
           </h2>
         </div>
       </section>
