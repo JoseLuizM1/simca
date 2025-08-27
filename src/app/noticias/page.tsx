@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, ArrowRight } from "lucide-react"
 import Image from "next/image"
+import { useEffect, useState } from "react"
 
 
 const news = [
@@ -85,6 +86,16 @@ const news = [
 ]
 
 export default function NoticiasPage() {
+  
+  const [news, setNews] = useState([]);
+
+  useEffect(() => {
+    // Exemplo de busca de notícias de uma API
+    fetch("/api/noticias")
+      .then((res) => res.json())
+      .then((data) => setNews(data));
+  }, []);
+
   return (
     <section className="py-16 bg-red-900">
       <div className="container mx-auto px-4">
@@ -96,7 +107,7 @@ export default function NoticiasPage() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {news.map((item) => (
+          {news.map((item: any) => (
             <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow">
               <div className="relative h-48">
                 <Image src={item.image || "/placeholder.svg"} alt={item.title} fill className="object-cover" />
