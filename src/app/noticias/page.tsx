@@ -1,10 +1,9 @@
-"use client"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, ArrowRight } from "lucide-react"
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { title } from "process"
 
 
 const news = [
@@ -33,81 +32,93 @@ const news = [
     category: "Infraestrutura",
     image: "/placeholder.svg?height=200&width=300",
   },
-    {
+  {
     id: 4,
-    title: "Nova Unidade Básica de Saúde inaugurada no Bairro Centro",
-    excerpt:
-      "A nova UBS vai atender mais de 5 mil famílias da região central da cidade com serviços de saúde primária.",
-    date: "15 de Janeiro, 2024",
-    category: "Saúde",
+    title: "Novo Parque Municipal é inaugurado",
+    excerpt: "Espaço de lazer conta com áreas verdes, playground e pista de caminhada.",
+    date: "8 de Janeiro, 2024",
+    category: "Lazer",
     image: "/placeholder.svg?height=200&width=300",
   },
   {
     id: 5,
-    title: "Programa de Capacitação Profissional abre 200 vagas",
-    excerpt: "Cursos gratuitos em diversas áreas para qualificação profissional dos moradores de Cachoeirinha.",
-    date: "12 de Janeiro, 2024",
-    category: "Educação",
+    title: "Campanha de Vacinação contra a Gripe começa na próxima semana",
+    excerpt: "Imunização será realizada em todas as unidades de saúde do município.",
+    date: "5 de Janeiro, 2024",
+    category: "Saúde",
     image: "/placeholder.svg?height=200&width=300",
   },
   {
     id: 6,
-    title: "Obras de revitalização da Praça Central são concluídas",
-    excerpt: "Espaço público renovado oferece mais lazer e segurança para as famílias cachoeirinhenses.",
-    date: "10 de Janeiro, 2024",
-    category: "Infraestrutura",
+    title: "Novo Centro de Referência em Saúde Mental é inaugurado",
+    excerpt: "Espaço oferece atendimento psicológico e psiquiátrico para a população.",
+    date: "2 de Janeiro, 2024",
+    category: "Saúde",
     image: "/placeholder.svg?height=200&width=300",
   },
-    {
+  {
     id: 7,
-    title: "Nova Unidade Básica de Saúde inaugurada no Bairro Centro",
-    excerpt:
-      "A nova UBS vai atender mais de 5 mil famílias da região central da cidade com serviços de saúde primária.",
-    date: "15 de Janeiro, 2024",
+    title: "Novo Centro de Referência em Saúde Mental é inaugurado",
+    excerpt: "Espaço oferece atendimento psicológico e psiquiátrico para a população.",
+    date: "2 de Janeiro, 2024",
     category: "Saúde",
     image: "/placeholder.svg?height=200&width=300",
   },
   {
     id: 8,
-    title: "Programa de Capacitação Profissional abre 200 vagas",
-    excerpt: "Cursos gratuitos em diversas áreas para qualificação profissional dos moradores de Cachoeirinha.",
-    date: "12 de Janeiro, 2024",
-    category: "Educação",
+    title: "Novo Centro de Referência em Saúde Mental é inaugurado",
+    excerpt: "Espaço oferece atendimento psicológico e psiquiátrico para a população.",
+    date: "2 de Janeiro, 2024",
+    category: "Saúde",
     image: "/placeholder.svg?height=200&width=300",
   },
   {
     id: 9,
-    title: "Obras de revitalização da Praça Central são concluídas",
-    excerpt: "Espaço público renovado oferece mais lazer e segurança para as famílias cachoeirinhenses.",
-    date: "10 de Janeiro, 2024",
-    category: "Infraestrutura",
+    title: "Novo Centro de Referência em Saúde Mental é inaugurado",
+    excerpt: "Espaço oferece atendimento psicológico e psiquiátrico para a população.",
+    date: "2 de Janeiro, 2024",
+    category: "Saúde",
     image: "/placeholder.svg?height=200&width=300",
   },
+  {
+    id: 10,
+    title: "Novo Centro de Referência em Saúde Mental é inaugurado",
+    excerpt: "Espaço oferece atendimento psicológico e psiquiátrico para a população.",
+    date: "2 de Janeiro, 2024",
+    category: "Saúde",
+    image: "/placeholder.svg?height=200&width=300",
+  },
+  {
+    id: 11,
+    title: "Novo Centro de Referência em Saúde Mental é inaugurado",
+    excerpt: "Espaço oferece atendimento psicológico e psiquiátrico para a população.",
+    date: "2 de Janeiro, 2024",
+    category: "Saúde",
+    image: "/placeholder.svg?height=200&width=300",
+  },
+  {
+    id: 12,
+    title: "Novo Centro de Referência em Saúde Mental é inaugurado",
+    excerpt: "Espaço oferece atendimento psicológico e psiquiátrico para a população.",
+    date: "2 de Janeiro, 2024",
+    category: "Saúde",
+    image: "/placeholder.svg?height=200&width=300",
+  }
 ]
 
 export default function NoticiasPage() {
-  
-  const [news, setNews] = useState([]);
-
-  useEffect(() => {
-    // Exemplo de busca de notícias de uma API
-    fetch("/api/noticias")
-      .then((res) => res.json())
-      .then((data) => setNews(data));
-  }, []);
-
   return (
     <section className="py-16 bg-red-900">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">Últimas Notícias</h2>
-          <p className="text-lg text-black max-w-2xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Últimas Notícias</h2>
+          <p className="text-lg text-white max-w-2xl mx-auto">
             Fique por dentro das principais novidades e acontecimentos da nossa cidade
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {news.map((item: any) => (
+          {news.map((item) => (
             <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow">
               <div className="relative h-48">
                 <Image src={item.image || "/placeholder.svg"} alt={item.title} fill className="object-cover" />
@@ -129,9 +140,10 @@ export default function NoticiasPage() {
             </Card>
           ))}
         </div>
+        <div className="text-center">
+
+        </div>
       </div>
     </section>
-  );
+  )
 }
-
-
