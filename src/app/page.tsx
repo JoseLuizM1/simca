@@ -4,7 +4,7 @@ import JoinSection from "@/components/join-section";
 import NewlestedSection from "@/components/newlested-section";
 import NoticesSection from "@/components/notices-section";
 import ServicesSection from "@/components/services-section";
-import NoticiasPage from "./noticias/page";
+
 
 export default function Home() {
   return (
@@ -14,8 +14,7 @@ export default function Home() {
       <NewlestedSection />
       <NoticesSection />
       <ServicesSection />
-      <JoinSection />
-      
+      <JoinSection />      
     </main>
   );
 }

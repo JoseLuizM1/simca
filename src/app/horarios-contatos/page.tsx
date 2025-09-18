@@ -20,10 +20,19 @@ export default function HorariosContatosPage() {
 
   return (
     <main
-      style={{ height: "calc(100vh - 68px - 148px)" }}
-      className='bg-red-900'
+      style={{
+        height: "calc(100vh - 68px - 148px)",
+        backgroundImage: "url('/simca.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat"
+      }}
+      className='relative bg-red-800'
     >
-      <div className="container mx-auto gap-4 flex h-full text-white">
+      {/* semi-transparent overlay for better text contrast */}
+      <div className="absolute bg-black/40 pointer-events-none" aria-hidden="true" />
+
+      <div className="container mx-auto gap-4 flex h-full text-white z-10">
         <div className="w-full h-full flex flex-col justify-center gap-8">
           <div className='flex flex-col'>
             <h3 className="text-2xl font-bold">Horários</h3>

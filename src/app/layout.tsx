@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SIMCA",
+  title: "SIMCA - Sindicato dos Servidores Públicos de Cachoeirinha",
   description: "Sindicato dos Servidores Públicos de Cachoeirinha",
 };
 

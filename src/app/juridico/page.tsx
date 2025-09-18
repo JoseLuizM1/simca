@@ -1,11 +1,16 @@
+'use client';
 export default function Page() {
   return (
     <main
-      style={{ minHeight: "calc(100vh - 68px - 148px)" }}
-      className='relative bg-red-900'
+      style={{
+        backgroundImage: "url('/simca.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat"
+      }}
+      className="relative bg-red-800 min-h-[calc(100vh-68px-148px)] flex items-stretch"
     >
-
-      <div className="container mx-auto gap-4 flex flex-col justify-center h-full text-white">
+      <div className="container mx-auto gap-4 flex flex-col justify-center h-full text-white py-8">
         <h2 className="text-3xl font-bold">
           Jurídico
         </h2>
@@ -42,8 +47,6 @@ export default function Page() {
           <span className="font-medium"> 51 99866-0241</span>.
         </p>
       </div>
-
-
     </main>
   );
 }

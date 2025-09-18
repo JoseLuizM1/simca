@@ -33,33 +33,40 @@ export default function Page() {
   return (
     <main
       style={{ minHeight: "calc(100vh - 68px - 148px)" }}
-      className="bg-red-900 py-12"
+      className="relative bg-red-800 py-12"
     >
-      <div className="container mx-auto px-4 mb-12 text-center">
-        <h1 className="text-4xl font-bold text-white">Direção e Comissões</h1>
-        <p className="text-xl text-white">
-          Conheça as pessoas que fazem parte da direção e das comissões.
-        </p>
+
+      <div className="z-10 container mx-auto px-4 mb-12 text-center">
+      <h1 className="text-4xl font-bold text-white">Direção e Comissões</h1>
+      <p className="text-xl text-white">
+        Conheça as pessoas que fazem parte da direção e das comissões.
+      </p>
       </div>
-      <div className="container mx-auto px-4 flex flex-col gap-12">
-        {pessoas.map((pessoa, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-lg shadow p-8 flex flex-col md:flex-row items-center gap-8"
-          >
-            <img
-              src={pessoa.img}
-              alt={pessoa.cargo}
-              className="w-40 h-40 object-cover rounded-full shadow"
-            />
-            <div>
-              <h2 className="text-2xl font-bold text-red-900 mb-2">{pessoa.cargo}</h2>
-              <p className="text-lg text-gray-800">{pessoa.nome}</p>
-            </div>
-          </div>
-        ))}
+
+      <div
+      className="absolute inset-0 bg-cover bg-center bg-fixed"
+      style={{
+        backgroundImage: "url('/simca.png')",
+        opacity: 0.08,
+      }} />
+      <div className="relative z-10 container mx-auto px-4 flex flex-col gap-12">
+      {pessoas.map((pessoa, index) => (
+        <div
+        key={index}
+        className="bg-white rounded-lg shadow p-8 flex flex-col md:flex-row items-center gap-8"
+        >
+        <img
+          src={pessoa.img}
+          alt={pessoa.cargo}
+          className="w-40 h-40 object-cover rounded-full shadow"
+        />
+        <div>
+          <h2 className="text-2xl font-bold text-red-900 mb-2">{pessoa.cargo}</h2>
+          <p className="text-lg text-gray-800">{pessoa.nome}</p>
+        </div>
+        </div>
+      ))}
       </div>
-      <div></div>
     </main>
   );
 }

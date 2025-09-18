@@ -5,7 +5,7 @@ export default function NossaHistoriaPage() {
   return (
     <main
       style={{ height: "calc(100vh - 68px - 148px)" }}
-      className='relative flex items-center bg-red-900'
+      className='relative flex items-center bg-red-800'
     >
       
       <div className="container mx-auto gap-4 flex flex-col justify-center h-full  text-white">

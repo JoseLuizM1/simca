@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, ArrowRight } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 
 const news = [
@@ -35,11 +36,11 @@ const news = [
 
 export default function NoticiasPage() {
   return (
-    <section className="py-16 bg-red-700">
+    <section className="py-16 bg-red-600">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">Últimas Notícias</h2>
-          <p className="text-lg text-black max-w-2xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Últimas Notícias</h2>
+          <p className="text-lg text-white max-w-2xl mx-auto">
             Fique por dentro das principais novidades e acontecimentos da nossa cidade
           </p>
         </div>
@@ -59,10 +60,12 @@ export default function NoticiasPage() {
                 <CardTitle className="text-lg leading-tight">{item.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600 mb-4">{item.excerpt}</p>
-                <Button variant="ghost" className="p-0 h-auto text-red-600 hover:text-red-800">
-                  Ler mais <ArrowRight className="w-4 h-4 ml-1" />
-                </Button>
+                <Link href={`/noticias/${item.id}`}>
+                  <Button variant="ghost" className="p-0 h-auto text-red-600 hover:text-red-800">
+                    Ler mais <ArrowRight className="w-4 h-4 ml-1" />
+                  </Button>
+                </Link>
+
               </CardContent>
             </Card>
           ))}

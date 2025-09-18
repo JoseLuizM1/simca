@@ -19,11 +19,9 @@ export default function ServicesSection() {
         </div>
       </section>
       <section className="text-center bg-red-700 w-[auto] h-[auto] p-8">
-        <div className="container mx-auto flex flex-col gap-8 justify-center items-start p-8">
-          <h2 className="text-white text-5xl font-bold ">
+          <h2 className="text-white text-5xl font-bold justify-center">
             O SINDICATO É MAIS FORTE QUANDO EU PARTICIPO!
           </h2>
-        </div>
       </section>
     </>
   );

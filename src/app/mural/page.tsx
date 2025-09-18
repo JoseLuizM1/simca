@@ -717,7 +717,7 @@ function PhotoGallery() {
   }
 
   return (
-    <section className="py-16 bg-red-900">
+    <section className="py-16 bg-red-800">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
