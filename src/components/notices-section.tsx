@@ -1,40 +1,30 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Calendar, ArrowRight } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
+'use client';
+import { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Calendar, ArrowRight } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
+export default function NoticesSection() {
+  const [news, setNews] = useState<any[]>([]);
 
-const news = [
-  {
-    id: 1,
-    title: "Nova Unidade Básica de Saúde inaugurada no Bairro Centro",
-    excerpt:
-      "A nova UBS vai atender mais de 5 mil famílias da região central da cidade com serviços de saúde primária.",
-    date: "15 de Janeiro, 2024",
-    category: "Saúde",
-    image: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 2,
-    title: "Programa de Capacitação Profissional abre 200 vagas",
-    excerpt: "Cursos gratuitos em diversas áreas para qualificação profissional dos moradores de Cachoeirinha.",
-    date: "12 de Janeiro, 2024",
-    category: "Educação",
-    image: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 3,
-    title: "Obras de revitalização da Praça Central são concluídas",
-    excerpt: "Espaço público renovado oferece mais lazer e segurança para as famílias cachoeirinhenses.",
-    date: "10 de Janeiro, 2024",
-    category: "Infraestrutura",
-    image: "/placeholder.svg?height=200&width=300",
-  },
-]
+  useEffect(() => {
+    async function fetchNews() {
+      try {
+        const res = await fetch("/api/noticias");
+        if (!res.ok) throw new Error("Erro ao buscar notícias");
+        const data = await res.json();
+        setNews(data);
+      } catch (error) {
+        console.error(error);
+        setNews([]);
+      }
+    }
+    fetchNews();
+  }, []);
 
-export default function NoticiasPage() {
   return (
     <section className="py-16 bg-red-600">
       <div className="container mx-auto px-4">
@@ -44,12 +34,21 @@ export default function NoticiasPage() {
             Fique por dentro das principais novidades e acontecimentos da nossa cidade
           </p>
         </div>
-
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {news.map((item) => (
+          {news.slice(0, 3).map((item) => (
             <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow">
               <div className="relative h-48">
-                <Image src={item.image || "/placeholder.svg"} alt={item.title} fill className="object-cover" />
+                {item.image ? (
+                  <Image
+                    src={item.image}
+                    alt={item.tittle}
+                    fill
+                    className="object-cover"
+                    style={{ borderRadius: "0.5rem" }}
+                  />
+                ) : (
+                  <div className="bg-gray-200 w-full h-full rounded" />
+                )}
                 <Badge className="absolute top-4 left-4 bg-red-600">{item.category}</Badge>
               </div>
               <CardHeader>
@@ -65,7 +64,6 @@ export default function NoticiasPage() {
                     Ler mais <ArrowRight className="w-4 h-4 ml-1" />
                   </Button>
                 </Link>
-
               </CardContent>
             </Card>
           ))}
@@ -77,5 +75,5 @@ export default function NoticiasPage() {
         </div>
       </div>
     </section>
-  )
+  );
 }
