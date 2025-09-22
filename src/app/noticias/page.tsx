@@ -52,7 +52,7 @@ export default function NoticiasPage() {
   }
 
   return (
-    <section className="relative flex flex-col items-center gap-4 bg-red-900 min-h-screen py-8 px-4">
+    <section className="relative flex flex-col items-center gap-4 bg-red-800 min-h-screen py-8 px-4">
       <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
         {paginatedNews.map((article) => (
           <Card key={article.id} className="flex flex-col h-full">

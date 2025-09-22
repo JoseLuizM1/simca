@@ -2,9 +2,8 @@ export default function Page() {
   return (
     <main
       style={{ minHeight: "calc(100vh - 68px - 148px)" }}
-      
     >
-      <div className="container mx-auto gap-4 flex h-full text-black mt-9">
+      <div className="container mx-auto gap-4 flex flex-col md:flex-row h-full text-black mt-9">
         <div className="w-full h-full gap-8">
           <div className="flex flex-col">
             <h1 className="text-3xl font-bold">Plano Odontológico</h1>
@@ -15,9 +14,11 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="w-full h-full flex items-center justify-center">
-          <img src="odonto.avif"
+        <div className="w-full h-full flex items-center justify-center mt-6 md:mt-0">
+          <img
+            src="odonto.avif"
             alt="planos odontológicos"
+            className="max-w-full h-auto md:max-w-xs"
           />
         </div>
       </div>
@@ -25,10 +26,8 @@ export default function Page() {
         <h2 className="text-2xl font-bold">COMO ADERIR?</h2>
         <p className="text-lg gap-2 mt-2">
           Basta vir até o SIMCA, preencher o formulário de adesão ao Plano Odontológico e a autorização do desconto em folha de pagamento. Após o primeiro desconto já poderá marcar a sua consulta e utilizar os procedimentos conforme contrato!
-        </p>  
+        </p>
       </div>
-
-
     </main>
   );
 }

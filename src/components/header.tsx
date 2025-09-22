@@ -6,9 +6,9 @@ export default function Header() {
       <div className="container mx-auto flex items-center justify-between">
         <a href="/" className="font-bold text-white flex items-center">
           <img 
-            src="logo-simca.avif" 
+            src="simsim.png" 
             alt="Logo SIMCA" 
-            className="h-8"
+            className="h-10"
           />
         </a>
         <NavigationMenuComponent />

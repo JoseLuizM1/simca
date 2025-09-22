@@ -722,9 +722,9 @@ function PhotoGallery() {
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
             <Camera className="w-8 h-8 text-red-600" />
-            <h2 className="text-3xl md:text-4xl font-bold text-black">Mural do SIMCA</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">Mural do SIMCA</h2>
           </div>
-          <p className="text-lg text-black max-w-2xl mx-auto">
+          <p className="text-lg text-white max-w-2xl mx-auto">
             Conheça Cachoeirinha através de imagens que contam nossa história
           </p>
         </div>
@@ -747,8 +747,8 @@ function PhotoGallery() {
         {/* Active Section */}
         <div className="mb-8">
           <div className="text-center mb-6">
-            <h3 className="text-2xl font-bold text-black mb-2">{sections[activeSection].title}</h3>
-            <p className="text-black">{sections[activeSection].description}</p>
+            <h3 className="text-2xl font-bold text-white mb-2">{sections[activeSection].title}</h3>
+            <p className="text-white">{sections[activeSection].description}</p>
           </div>
 
           {/* Photo Carousel */}
@@ -804,7 +804,7 @@ function PhotoGallery() {
         </div>
 
         {/* Photo Counter */}
-        <div className="text-center text-sm text-black">
+        <div className="text-center text-sm text-white">
           {sections[activeSection].photos.length} fotos na galeria "{sections[activeSection].title}"
         </div>
       </div>
