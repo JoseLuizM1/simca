@@ -29,3 +29,15 @@ export async function POST(request: NextRequest) {
   await connection.end();
   return NextResponse.json({ id: (result as any).insertId, tittle, excerpt, date, category, image }, { status: 201 });
 }
+
+export async function DELETE(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
+  if (!id) {
+    return NextResponse.json({ error: "ID não informado." }, { status: 400 });
+  }
+  const connection = await mysql.createConnection(dbConfig);
+  await connection.execute("DELETE FROM noticias WHERE id = ?", [id]);
+  await connection.end();
+  return NextResponse.json({ success: true });
+}
