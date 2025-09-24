@@ -270,22 +270,22 @@ function PhotoGallery() {
       photos: [
         {
           id: 49,
-          src: "/luta/luta (1).jpg",
+          src: "/luta/luta (1).JPG",
           alt: "Luta 1"
         },
         {
           id: 50,
-          src: "/luta/luta (2).jpg",
+          src: "/luta/luta (2).JPG",
           alt: "Luta 2"
         },
         {
           id: 51,
-          src: "/luta/luta (3).jpg",
+          src: "/luta/luta (3).JPG",
           alt: "Luta 3"
         },
         {
           id: 52,
-          src: "/luta/luta (4).jpg",
+          src: "/luta/luta (4).JPG",
           alt: "Luta 4"
         },
         {
@@ -330,22 +330,22 @@ function PhotoGallery() {
         },
         {
           id: 61,
-          src: "/luta/luta (13).jpg",
+          src: "/luta/luta (13).JPG",
           alt: "Luta 13"
         },
         {
           id: 62,
-          src: "/luta/luta (14).jpg",
+          src: "/luta/luta (14).JPG",
           alt: "Luta 14"
         },
         {
           id: 63,
-          src: "/luta/luta (15).jpg",
+          src: "/luta/luta (15).JPG",
           alt: "Luta 15"
         },
         {
           id: 64,
-          src: "/luta/luta (16).jpg",
+          src: "/luta/luta (16).JPG",
           alt: "Luta 16"
         },
         {
@@ -431,12 +431,12 @@ function PhotoGallery() {
         },
         {
           id: 81,
-          src: "/luta/luta18 (1).JPG",
+          src: "/luta/luta18 (1).jpg",
           alt: "Luta 33"
         },
         {
           id: 82,
-          src: "/luta/luta18 (2).JPG",
+          src: "/luta/luta18 (2).jpg",
           alt: "Luta 34"
         },
         {
