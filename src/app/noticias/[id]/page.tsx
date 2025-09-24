@@ -12,7 +12,7 @@ type Notice = {
   date?: string;
   category?: string;
   image?: string;
-  excerpt?: string;
+  description?: string;
 };
 
 export default function Page() {
@@ -118,7 +118,7 @@ export default function Page() {
 
           <div className="prose prose-lg max-w-none">
             <p className="whitespace-pre-wrap leading-relaxed">
-              {notice?.excerpt ?? 'Sem resumo disponível.'}
+              {notice?.description ?? 'Sem resumo disponível.'}
             </p>
           </div>
         </article>

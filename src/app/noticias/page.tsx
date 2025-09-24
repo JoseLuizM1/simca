@@ -14,6 +14,7 @@ import {
 import { useState, useEffect } from "react"
 import { useNoticeStore } from "@/providers/store";
 import { useRouter } from "next/navigation";
+import { createClient } from "@/utils/supabase/client";
 
 export default function NoticiasPage() {
   const [news, setNews] = useState<any[]>([]);
@@ -21,12 +22,15 @@ export default function NoticiasPage() {
   const [isMobile, setIsMobile] = useState(false);
   const { setNotice } = useNoticeStore();
   const navigation = useRouter();
+  const supabase = createClient();
 
   useEffect(() => {
     async function fetchNews() {
-      const res = await fetch("/api/noticias");
-      const data = await res.json();
-      setNews(data);
+      const { data: notices } = await supabase.from('notices').select('*');
+
+      if (notices) {
+        setNews(notices);
+      }
     }
     fetchNews();
   }, []);
@@ -73,13 +77,17 @@ export default function NoticiasPage() {
                 {article.title}
               </CardTitle>
               <p className="text-muted-foreground text-xs sm:text-sm mb-4 line-clamp-2 md:line-clamp-3 leading-relaxed">
-                {article.excerpt}
+                {article.description}
               </p>
             </CardContent>
             <CardFooter className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-0 p-3">
               <div className="flex items-center text-xs sm:text-sm text-muted-foreground mr-auto">
                 <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-                <span className="truncate">{article.date}</span>
+                <span>
+                    {article.date
+                    ? new Date(article.date + "T00:00:00").toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })
+                    : ""}
+                </span>
               </div>
               <Button
                 onClick={() => handleReadMore(article)}
