@@ -1,6 +1,6 @@
 "use client"
-import { useState, useRef, useEffect } from "react"
-import { Card, CardContent } from "@/components/ui/card"
+
+import React, { useState, useRef, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight, Camera, Plus, Upload } from "lucide-react"
 import Image from "next/image"
@@ -11,6 +11,10 @@ import {
   DialogHeader,
   DialogTitle
 } from "@/components/ui/dialog"
+import {
+  Card,
+  CardContent
+} from "@/components/ui/card"
 import {
   Select,
   SelectTrigger,
@@ -731,7 +735,7 @@ function PhotoGallery() {
         }
       ],
     },
-])
+  ])
 
   // Carregar fotos do Supabase ao inicializar
   useEffect(() => {
@@ -742,7 +746,7 @@ function PhotoGallery() {
     try {
       const response = await fetch('/api/photos')
       const { sections: supabaseSections } = await response.json()
-      
+
       // Mesclar com fotos existentes (se necessário)
       setSections(prevSections => {
         return prevSections.map((section, index) => ({
@@ -868,7 +872,7 @@ function PhotoGallery() {
               {section.title}
             </Button>
           ))}
-          
+
           {/* Add Photo Button */}
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
             <DialogTrigger asChild>
