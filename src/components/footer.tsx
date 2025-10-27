@@ -11,7 +11,7 @@ export default function Footer() {
         <span className='text-white w-full'>&copy; {new Date().getFullYear()}</span>
 
         <div className='flex gap-4 w-full'>
-          <FaFacebook className='text-white text-xl cursor-pointer' onClick={() => window.open('https://www.facebook.com/SIMCAoficial', '_blank')} />
+          <FaFacebook className='text-white text-xl cursor-pointer' onClick={() => window.open('https://www.facebook.com/SindicatoDosMunicipariosDeCachoeirinhars?locale=pt_BR', '_blank')} />
           <FaInstagram className='text-white text-xl cursor-pointer' onClick={() => window.open('https://www.instagram.com/simcacachoeirinha/', '_blank')} />
           <FaWhatsapp className='text-white text-xl cursor-pointer' onClick={() => window.open('https://wa.me/+555198660241', '_blank')} />
           <FaYoutube className='text-white text-xl cursor-pointer' onClick={() => window.open('https://www.youtube.com/@TVSIMCA', '_blank')} />

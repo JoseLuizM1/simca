@@ -22,7 +22,7 @@ export default function HorariosContatosPage() {
     <main
       style={{
         height: "calc(100vh - 68px - 148px)",
-        backgroundImage: "url('/simca.png')",
+        backgroundImage: "url('/simca2.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat"

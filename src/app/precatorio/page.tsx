@@ -13,7 +13,7 @@ export default function PrecatorioPage() {
   return (
     <main
       style={{height: "calc(100vh - 68px)",
-        backgroundImage: "url('/simca.png')",
+        backgroundImage: "url('/simca2.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat"
@@ -23,7 +23,7 @@ export default function PrecatorioPage() {
       <div className="container mx-auto flex flex-col gap-8 text-white">
         <h1 className="text-2xl font-bold mb-4">PRECATÓRIOS</h1>
         <p className="text-lg mb-4">
-          Abaixo serão inseridas as imagens referentes aos precatórios
+          Confira abaixo a listagem de precatórios.
         </p>
         <div className="flex flex-col md:flex-row gap-6 items-center md:items-stretch justify-center">
           {images.map((src, idx) => (

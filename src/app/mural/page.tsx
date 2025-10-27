@@ -1,10 +1,37 @@
 "use client"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight, Camera } from "lucide-react"
+import { ChevronLeft, ChevronRight, Camera, Plus, Upload } from "lucide-react"
 import Image from "next/image"
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle
+} from "@/components/ui/dialog"
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem
+} from "@/components/ui/select"
+import { Input } from "@/components/ui/input"
+import { supabase } from '@/lib/supabase'
 
+interface Photo {
+  id: number;
+  src: string;
+  alt: string;
+}
+
+interface Section {
+  title: string;
+  description: string;
+  photos: Photo[];
+}
 
 export default function MuralPage() {
   return <PhotoGallery />;
@@ -12,10 +39,16 @@ export default function MuralPage() {
 
 function PhotoGallery() {
   const [activeSection, setActiveSection] = useState(0)
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [selectedSection, setSelectedSection] = useState<number>(0)
+  const [imageAlt, setImageAlt] = useState("")
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const scrollRefs = useRef<(HTMLDivElement | null)[]>([])
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   // IDs numerados em ordem crescente entre todas as arrays
-  const sections = [
+  const [sections, setSections] = useState<Section[]>([
     {
       title: "Assembleias",
       description: "Momentos especiais da nossa cidade",
@@ -698,7 +731,32 @@ function PhotoGallery() {
         }
       ],
     },
-  ]
+])
+
+  // Carregar fotos do Supabase ao inicializar
+  useEffect(() => {
+    loadPhotosFromSupabase()
+  }, [])
+
+  const loadPhotosFromSupabase = async () => {
+    try {
+      const response = await fetch('/api/photos')
+      const { sections: supabaseSections } = await response.json()
+      
+      // Mesclar com fotos existentes (se necessário)
+      setSections(prevSections => {
+        return prevSections.map((section, index) => ({
+          ...section,
+          photos: [
+            ...section.photos, // Fotos existentes
+            ...(supabaseSections[index]?.photos || []) // Novas fotos do Supabase
+          ]
+        }))
+      })
+    } catch (error) {
+      console.error('Erro ao carregar fotos:', error)
+    }
+  }
 
   const scroll = (direction: "left" | "right", sectionIndex: number) => {
     const container = scrollRefs.current[sectionIndex]
@@ -713,6 +771,74 @@ function PhotoGallery() {
         left: newScrollLeft,
         behavior: "smooth",
       })
+    }
+  }
+
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      setSelectedFile(file)
+      const url = URL.createObjectURL(file)
+      setPreviewUrl(url)
+    }
+  }
+
+  const handleAddPhoto = async () => {
+    if (selectedFile && imageAlt) {
+      try {
+        const formData = new FormData()
+        formData.append('file', selectedFile)
+        formData.append('section', selectedSection.toString())
+        formData.append('alt', imageAlt)
+
+        const response = await fetch('/api/upload-supabase', {
+          method: 'POST',
+          body: formData,
+        })
+
+        if (!response.ok) {
+          throw new Error('Erro no upload')
+        }
+
+        const result = await response.json()
+
+        const newPhoto = {
+          id: result.photo.id,
+          src: result.url,
+          alt: imageAlt
+        }
+
+        // Atualizar estado local
+        setSections(prevSections => {
+          const updatedSections = [...prevSections]
+          updatedSections[selectedSection].photos.push(newPhoto)
+          return updatedSections
+        })
+
+        // Reset do formulário
+        setSelectedFile(null)
+        setImageAlt("")
+        setPreviewUrl(null)
+        setIsAddDialogOpen(false)
+        if (fileInputRef.current) {
+          fileInputRef.current.value = ""
+        }
+
+        alert('Foto adicionada com sucesso!')
+
+      } catch (error) {
+        console.error('Erro ao adicionar foto:', error)
+        alert('Erro ao adicionar foto. Tente novamente.')
+      }
+    }
+  }
+
+  const resetForm = () => {
+    setSelectedFile(null)
+    setImageAlt("")
+    setPreviewUrl(null)
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""
     }
   }
 
@@ -742,6 +868,101 @@ function PhotoGallery() {
               {section.title}
             </Button>
           ))}
+          
+          {/* Add Photo Button */}
+          <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+            <DialogTrigger asChild>
+              <Button
+                variant="outline"
+                className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white border-green-600"
+                onClick={() => {
+                  setSelectedSection(activeSection)
+                  resetForm()
+                }}
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Adicionar Foto
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle>Adicionar Nova Foto</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                {/* Section Selection */}
+                <div>
+                  <label className="text-sm font-medium mb-2 block">Seção:</label>
+                  <Select value={selectedSection.toString()} onValueChange={(value: string) => setSelectedSection(parseInt(value))}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {sections.map((section, index) => (
+                        <SelectItem key={index} value={index.toString()}>
+                          {section.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* File Input */}
+                <div>
+                  <label className="text-sm font-medium mb-2 block">Imagem:</label>
+                  <Input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileSelect}
+                    className="cursor-pointer"
+                  />
+                </div>
+
+                {/* Preview */}
+                {previewUrl && (
+                  <div className="relative h-40 w-full rounded-lg overflow-hidden border">
+                    <Image
+                      src={previewUrl}
+                      alt="Preview"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
+
+                {/* Alt Text */}
+                <div>
+                  <label className="text-sm font-medium mb-2 block">Descrição da imagem:</label>
+                  <Input
+                    value={imageAlt}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setImageAlt(e.target.value)}
+                    placeholder="Ex: Assembleia realizada em..."
+                  />
+                </div>
+
+                {/* Actions */}
+                <div className="flex justify-end gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setIsAddDialogOpen(false)
+                      resetForm()
+                    }}
+                  >
+                    Cancelar
+                  </Button>
+                  <Button
+                    onClick={handleAddPhoto}
+                    disabled={!selectedFile || !imageAlt}
+                    className="bg-green-600 hover:bg-green-700"
+                  >
+                    <Upload className="w-4 h-4 mr-2" />
+                    Adicionar
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
 
         {/* Active Section */}
@@ -794,7 +1015,7 @@ function PhotoGallery() {
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
                     </div>
                     <div className="p-4">
-                      <h4 className="font-semibold text-gray-900 text-center"></h4>
+                      <h4 className="font-semibold text-gray-900 text-center">{photo.alt}</h4>
                     </div>
                   </CardContent>
                 </Card>

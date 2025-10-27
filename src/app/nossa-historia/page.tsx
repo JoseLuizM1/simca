@@ -21,7 +21,7 @@ export default function NossaHistoriaPage() {
       <div
         className="absolute inset-0 bg-cover bg-center pointer-events-none"
         style={{
-          backgroundImage: "url('/simca.png')",
+          backgroundImage: "url('/simca2.png')",
           opacity: 0.2,
           zIndex: 0,
         }}

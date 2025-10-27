@@ -1,30 +1,30 @@
 const pessoas = [
-  { img: "/imagens/adriana.jpg", cargo: "Coordenação de Ação Sindical", nome: "Adriana" },
-  { img: "/imagens/tania_silva.jpg", cargo: "Coordenação de Luta Antirracista", nome: "Tania Silva" },
-  { img: "/imagens/amanda.jpg", cargo: "Coordenação de Organização", nome: "Amanda" },
-  { img: "/imagens/andreia.jpg", cargo: "Professora - EMEI Maria da Glória", nome: "Andreia" },
-  { img: "/imagens/antonina.jpg", cargo: "Professora Aposentada", nome: "Antonina" },
-  { img: "/imagens/cassius.jpg", cargo: "Educador Social - AIMA", nome: "Cassius" },
-  { img: "/imagens/clarissa.jpg", cargo: "Assistente Social - CRAS Betânia", nome: "Clarissa" },
-  { img: "/imagens/clelia.jpg", cargo: "Professora - EMEI Maria da Glória", nome: "Clelia" },
-  { img: "/imagens/Daniela.jpg", cargo: "Coordenação de Formação e Cultura", nome: "Daniela" },
-  { img: "/imagens/delmarina.jpg", cargo: "Auxiliar de Enfermagem - ESF Carlos Wilkens", nome: "Del Marina" },
-  { img: "/imagens/giani.jpg", cargo: "Professora - EMEI Chapeuzinho Vermelho", nome: "Giani" },
-  { img: "/imagens/guilherme.jpg", cargo: "Suplente de Coordenação de Organização", nome: "Guilherme" },
-  { img: "/imagens/ionice.jpg", cargo: "Coordenação de Aposentados", nome: "Ionice" },
-  { img: "/imagens/janina.jpg", cargo: "Professora - EMEB Castro Alves", nome: "Janina" },
-  { img: "/imagens/Juraci.jpg", cargo: "Servente - EMEI Granjinha", nome: "Juraci" },
-  { img: "/imagens/Lisiane.jpg", cargo: "Coordenação de Mulheres", nome: "Lisiane" },
-  { img: "/imagens/lourdete.jpg", cargo: "Servente - EMEB Castro Alves", nome: "Lourdete" },
-  { img: "/imagens/lucas_gondran.jpg", cargo: "Suplente de Coordenação de Finanças e Patrimônio", nome: "Lucas Gondran" },
+  { img: "/imagens/adriana.jpg", cargo: "Coordenação de Ação Sindical", nome: "Adriana Lemos" },
+  { img: "/imagens/tania_silva.jpg", cargo: "Coordenação de Luta Antirracista", nome: "Tânia Silva" },
+  { img: "/imagens/amanda.jpg", cargo: "Coordenação de Organização", nome: "Amanda Rodrigues" },
+  { img: "/imagens/andreia.jpg", cargo: "Professora - EMEI Maria da Glória", nome: "Andreia Dell Osbell" },
+  { img: "/imagens/antonina.jpg", cargo: "Professora Aposentada", nome: "Antonina Rothermel" },
+  { img: "/imagens/cassius.jpg", cargo: "Educador Social - AIMA", nome: "Cassius de Olveira Bocha" },
+  { img: "/imagens/clarissa.jpg", cargo: "Assistente Social - CRAS Betânia", nome: "Clarissa de Oliveira" },
+  { img: "/imagens/clelia.jpg", cargo: "Professora - EMEI Maria da Glória", nome: "Clélia de Oliveira" },
+  { img: "/imagens/Daniela.jpg", cargo: "Coordenação de Formação e Cultura", nome: "Daniela de Souza" },
+  { img: "/imagens/delmarina.jpg", cargo: "Auxiliar de Enfermagem - ESF Carlos Wilkens", nome: "Delmarina Pereira" },
+  { img: "/imagens/giani.jpg", cargo: "Professora - EMEI Chapeuzinho Vermelho", nome: "Giani Geremias" },
+  { img: "/imagens/guilherme.jpg", cargo: "Suplente de Coordenação de Organização", nome: "Guilherme Runge" },
+  { img: "/imagens/ionice.jpg", cargo: "Coordenação de Aposentados", nome: "Ionice de Souza" },
+  { img: "/imagens/janina.jpg", cargo: "Professora - EMEB Castro Alves", nome: "Janina Marques de Oliveira" },
+  { img: "/imagens/Juraci.jpg", cargo: "Servente - EMEI Granjinha", nome: "Juraci dos Santos" },
+  { img: "/imagens/Lisiane.jpg", cargo: "Coordenação de Mulheres", nome: "Lisiane Britto" },
+  { img: "/imagens/lourdete.jpg", cargo: "Servente - EMEB Castro Alves", nome: "Lourdete Teixeira" },
+  { img: "/imagens/lucas_gondran.jpg", cargo: "Coordenação de Finanças e Patrimônio", nome: "Lucas Gondran" },
   { img: "/imagens/lucas_mion.jpg", cargo: "Médico - CAPS AD", nome: "Lucas Mion" },
   { img: "/imagens/luciane_cereça.jpg", cargo: "Diretor de Marketing Digital", nome: "Luciane Cereça" },
   { img: "/imagens/luciano.jpg", cargo: "Agente de Combate a Endemias", nome: "Luciano" },
   { img: "/imagens/maria_elisabete.jpg", cargo: "Professora - CMAEEL", nome: "Maria Elisabete" },
-  { img: "/imagens/patricia.jpg", cargo: "Professora de Educação Especial - CMAEEL", nome: "Patrícia" },
-  { img: "/imagens/rodrigo.jpg", cargo: "Coordenação de Comunicação e Imprensa", nome: "Rodrigo" },
-  { img: "/imagens/tania_coelho.jpg", cargo: "Suplente de Coordenação de Ação Sindical", nome: "Tania Coelho" },
-  { img: "/imagens/tatiane.jpg", cargo: "Téc. Atendimento Farmacêutico - Farmácia", nome: "Tatiane" },
+  { img: "/imagens/patricia.jpg", cargo: "Professora de Educação Especial - CMAEEL", nome: "Patrícia Rodrigues" },
+  { img: "/imagens/rodrigo.jpg", cargo: "Coordenação de Comunicação e Imprensa", nome: "Rodrigo Lampert" },
+  { img: "/imagens/tania_coelho.jpg", cargo: "Suplente de Coordenação de Ação Sindical", nome: "Tânia Coelho" },
+  { img: "/imagens/tatiane.jpg", cargo: "Téc. Atendimento Farmacêutico - Farmácia", nome: "Tatiane Leal" },
   { img: "/imagens/verinha.jpg", cargo: "Diretor de Desenvolvimento", nome: "Verinha" }
   
 ];
@@ -46,8 +46,8 @@ export default function Page() {
       <div
       className="absolute inset-0 bg-cover bg-center bg-fixed"
       style={{
-        backgroundImage: "url('/simca.png')",
-        opacity: 0.08,
+        backgroundImage: "url('/simca2.png')",
+        opacity: 0.2,
       }} />
       <div className="relative z-10 container mx-auto px-4 flex flex-col gap-12">
       {pessoas.map((pessoa, index) => (
