@@ -1,5 +1,15 @@
-module.exports = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
-    domains: ['drive.google.com'], // coloque aqui o domínio correto
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'sniwsqukpuuehmqhoczq.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/public/**',
+      },
+    ],
   },
-};
+}
+
+module.exports = nextConfig

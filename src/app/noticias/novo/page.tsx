@@ -3,8 +3,23 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { createClient } from "@/utils/supabase/client";
-import { Loader } from "lucide-react";
+import { Loader, Plus, Upload, X, Image as ImageIcon } from "lucide-react";
 import { useState } from "react";
+import Image from "next/image";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function NovaNoticia() {
   const [form, setForm] = useState({
@@ -17,12 +32,75 @@ export default function NovaNoticia() {
   const [imagemFile, setImagemFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  
+  // Estados para upload no mural (novo)
+  const [isMuralDialogOpen, setIsMuralDialogOpen] = useState(false);
+  const [muralFile, setMuralFile] = useState<File | null>(null);
+  const [muralAltText, setMuralAltText] = useState("");
+  const [muralSection, setMuralSection] = useState<string>("");
+  const [muralPreviewUrl, setMuralPreviewUrl] = useState<string | null>(null);
+  const [muralUploading, setMuralUploading] = useState(false);
+
   const supabase = createClient();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setImagemFile(e.target.files[0]);
     }
+  };
+
+  // Função para lidar com seleção de imagem do mural (novo)
+  const handleMuralFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setMuralFile(file);
+      const url = URL.createObjectURL(file);
+      setMuralPreviewUrl(url);
+    }
+  };
+
+  // Função para adicionar imagem ao mural (novo)
+  const handleAddToMural = async () => {
+    if (muralFile && muralAltText && muralSection) {
+      try {
+        setMuralUploading(true);
+        
+        const formData = new FormData();
+        formData.append('file', muralFile);
+        formData.append('section', muralSection);
+        formData.append('alt', muralAltText);
+
+        const response = await fetch('/api/mural-upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error('Erro no upload para o mural');
+        }
+
+        const result = await response.json();
+
+        // Reset do formulário do mural
+        resetMuralForm();
+        setIsMuralDialogOpen(false);
+
+        alert('Imagem adicionada ao mural com sucesso!');
+      } catch (error) {
+        console.error('Erro ao adicionar ao mural:', error);
+        alert('Erro ao adicionar imagem ao mural. Tente novamente.');
+      } finally {
+        setMuralUploading(false);
+      }
+    }
+  };
+
+  // Reset do formulário do mural (novo)
+  const resetMuralForm = () => {
+    setMuralFile(null);
+    setMuralAltText("");
+    setMuralSection("");
+    setMuralPreviewUrl(null);
   };
 
   const handleSubmit = async () => {
@@ -71,68 +149,170 @@ export default function NovaNoticia() {
   };
 
   return (
-    <div      
-      style={{
-        height: "calc(100vh - 68px - 152px)",
-      }}
-      className="flex items-center justify-center"
-    >
-      <form className="flex flex-col gap-4">
-        <h1 className="text-center font-bold text-xl">Nova Notícia</h1>
-        <Input 
-          type="text" 
-          placeholder="Título da notícia" 
-          className="w-96" 
-          onChange={(e) => setForm({ ...form, title: e.target.value })} 
-        />
+    <div className="min-h-screen bg-gray-50 py-4 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-2xl mx-auto">
+        {/* Botão para adicionar ao mural - acima do formulário (novo) */}
+        <div className="mb-6 text-center">
+          <Dialog open={isMuralDialogOpen} onOpenChange={setIsMuralDialogOpen}>
+            <DialogTrigger asChild>
+              <Button
+                type="button"
+                variant="outline"
+                className="bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100 w-full sm:w-auto"
+                onClick={resetMuralForm}
+              >
+                <ImageIcon className="w-4 h-4 mr-2" />
+                Adicionar Foto ao Mural
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="w-[95vw] max-w-md mx-auto">
+              <DialogHeader>
+                <DialogTitle>Adicionar Foto ao Mural</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium mb-2 block">Seção do Mural:</label>
+                  <Select value={muralSection} onValueChange={setMuralSection}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione uma seção" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="0">Assembleias</SelectItem>
+                      <SelectItem value="1">Enquadramentos</SelectItem>
+                      <SelectItem value="2">SIMCA na luta</SelectItem>
+                      <SelectItem value="3">Reuniões</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
 
-        <Input 
-          type="text" 
-          placeholder="Categoria da notícia" 
-          className="w-96" 
-          onChange={(e) => setForm({ ...form, category: e.target.value })}
-          required
-        />
+                <div>
+                  <label className="text-sm font-medium mb-2 block">Imagem:</label>
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleMuralFileSelect}
+                    className="cursor-pointer"
+                  />
+                </div>
 
-        <input
-          type="date"
-          name="date"
-          placeholder="Data da notícia"
-          value={form.date}
-          onChange={(e) => setForm({ ...form, date: e.target.value })}
-          required
-          className="border p-2 rounded"
-        />
+                {muralPreviewUrl && (
+                  <div className="relative h-32 sm:h-40 w-full rounded-lg overflow-hidden border">
+                    <Image
+                      src={muralPreviewUrl}
+                      alt="Preview"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
 
-        <Textarea 
-          placeholder="Descrição da notícia" 
-          className="w-96 h-32" 
-          onChange={(e) => setForm({ ...form, description: e.target.value })} 
-        />
+                <div>
+                  <label className="text-sm font-medium mb-2 block">Descrição da imagem:</label>
+                  <Input
+                    value={muralAltText}
+                    onChange={(e) => setMuralAltText(e.target.value)}
+                    placeholder="Ex: Assembleia do dia 15/10/2024..."
+                  />
+                </div>
 
-        <Input 
-          id="picture" 
-          type="file" 
-          accept="image/*" 
-          onChange={handleImageChange} 
-          className="w-96"
-        />
+                <div className="flex flex-col sm:flex-row justify-end gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full sm:w-auto"
+                    onClick={() => {
+                      setIsMuralDialogOpen(false);
+                      resetMuralForm();
+                    }}
+                  >
+                    Cancelar
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={handleAddToMural}
+                    disabled={!muralFile || !muralAltText || !muralSection || muralUploading}
+                    className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto"
+                  >
+                    {muralUploading ? (
+                      <Loader className="w-4 h-4 mr-2 animate-spin" />
+                    ) : (
+                      <Upload className="w-4 h-4 mr-2" />
+                    )}
+                    Adicionar ao Mural
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
 
-        <Button 
-          type="button" 
-          className="w-96 bg-red-600 hover:bg-red-700" 
-          onClick={handleSubmit}
-          disabled={loading}
-        >
-          {loading ? <Loader className="animate-spin" /> : 'Salvar Notícia'}
-        </Button>
+        {/* Formulário da notícia (existente) */}
+        <div className="bg-white rounded-lg shadow-sm p-6 sm:p-8">
+          <form className="flex flex-col gap-4 sm:gap-6">
+            <h1 className="text-center font-bold text-xl sm:text-2xl text-gray-800">Nova Notícia</h1>
+            
+            <Input 
+              type="text" 
+              placeholder="Título da notícia" 
+              className="w-full" 
+              value={form.title}
+              onChange={(e) => setForm({ ...form, title: e.target.value })} 
+            />
 
-        {message && 
-          <span className="text-center text-green-400 text-sm font-semibold">
-            {message}
-          </span>
-        }
-      </form>
+            <Input 
+              type="text" 
+              placeholder="Categoria da notícia" 
+              className="w-full" 
+              value={form.category}
+              onChange={(e) => setForm({ ...form, category: e.target.value })}
+              required
+            />
+
+            <input
+              type="date"
+              name="date"
+              placeholder="Data da notícia"
+              value={form.date}
+              onChange={(e) => setForm({ ...form, date: e.target.value })}
+              required
+              className="border border-gray-300 p-2 sm:p-3 rounded-md w-full focus:ring-2 focus:ring-red-500 focus:border-red-500"
+            />
+
+            <Textarea 
+              placeholder="Descrição da notícia" 
+              className="w-full h-32 sm:h-40 resize-none" 
+              value={form.description}
+              onChange={(e) => setForm({ ...form, description: e.target.value })} 
+            />
+
+            <Input 
+              id="picture" 
+              type="file" 
+              accept="image/*" 
+              onChange={handleImageChange} 
+              className="w-full cursor-pointer"
+            />
+
+            <Button 
+              type="button" 
+              className="w-full bg-red-600 hover:bg-red-700 py-2 sm:py-3 text-sm sm:text-base font-medium" 
+              onClick={handleSubmit}
+              disabled={loading}
+            >
+              {loading ? <Loader className="animate-spin mr-2" /> : null}
+              {loading ? 'Salvando...' : 'Salvar Notícia'}
+            </Button>
+
+            {message && 
+              <div className="text-center p-3 rounded-md bg-green-50 border border-green-200">
+                <span className="text-green-700 text-sm font-semibold">
+                  {message}
+                </span>
+              </div>
+            }
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

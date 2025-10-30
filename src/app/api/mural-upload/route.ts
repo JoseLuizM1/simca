@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
         alt: photoData.alt_text
       },
       url: publicUrl,
-      message: 'Foto enviada com sucesso!'
+      message: 'Foto adicionada ao mural com sucesso!'
     })
 
   } catch (error) {
