@@ -16,7 +16,7 @@ type NewsItem = {
 async function fetchNoticias(): Promise<any> {
   // Supabase REST + Storage (public bucket) example — não precisa do supabase-js
   const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_KEY;
+  const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   const BUCKET = process.env.NEXT_PUBLIC_SUPABASE_BUCKET || "images"; // ajuste para seu bucket
 
   if (!SUPABASE_URL || !SUPABASE_KEY) {
