@@ -12,6 +12,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { useMobileMenuStore } from "@/providers/store";
 
 const menus: { title: string; href: string; components?: any }[] = [
   {
@@ -65,7 +66,7 @@ const menus: { title: string; href: string; components?: any }[] = [
 ];
 
 export default function NavigationMenuComponent() {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const {mobileOpen, setMobileOpen} = useMobileMenuStore();
 
   return (
     <nav>
@@ -114,58 +115,13 @@ export default function NavigationMenuComponent() {
       <div className="md:hidden flex items-center">
         <button
           aria-label="Abrir menu"
-          onClick={() => setMobileOpen((v) => !v)}
+          onClick={() => setMobileOpen(!mobileOpen)}
           className="text-white p-2"
         >
           {mobileOpen ? <XIcon size={28} /> : <MenuIcon size={28} />}
         </button>
       </div>
 
-      {/* Mobile Menu Drawer */}
-      {mobileOpen && (
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex flex-col">
-          <div className="flex justify-end p-4">
-            <button
-              aria-label="Fechar menu"
-              onClick={() => setMobileOpen(false)}
-              className="text-white"
-            >
-              <XIcon size={28} />
-            </button>
-          </div>
-          <nav className="flex-1 flex flex-col items-center gap-4">
-            {menus.map((menu) =>
-              menu.components ? (
-                <div key={menu.title} className="w-full">
-                  <span className="block text-white font-bold px-4 py-2">{menu.title}</span>
-                  <ul>
-                    {menu.components.map((component: any) => (
-                      <li key={component.title}>
-                        <Link
-                          href={component.href}
-                          className="block text-red-700 px-8 py-2"
-                          onClick={() => setMobileOpen(false)}
-                        >
-                          {component.title}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : (
-                <Link
-                  key={menu.title}
-                  href={menu.href}
-                  className="block text-white px-4 py-2 font-bold"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {menu.title}
-                </Link>
-              )
-            )}
-          </nav>
-        </div>
-      )}
     </nav>
   );
 }

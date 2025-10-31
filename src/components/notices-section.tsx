@@ -43,17 +43,17 @@ export default async function NoticesSection() {
                 )}
                 <Badge className="absolute top-4 left-4 bg-red-600">{item.category}</Badge>
               </div>
-              <CardHeader>
+              <CardHeader className="px-4 pt-4">
                 <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
                   <Calendar className="w-4 h-4" />
                   {item.date}
                 </div>
                 <CardTitle className="text-lg leading-tight">{item.title}</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="px-2 pb-4">
                 <Link href={`/noticias/${item.id}`}>
-                  <Button variant="ghost" className="p-0 h-auto text-red-600 hover:text-red-800">
-                    Ler mais <ArrowRight className="w-4 h-4 ml-1" />
+                  <Button variant="ghost" className="h-auto text-red-600 hover:text-red-800">
+                    Ler mais <ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
               </CardContent>
@@ -62,7 +62,13 @@ export default async function NoticesSection() {
         </div>
         <div className="text-center">
           <Link href="/noticias">
-            <Button size="lg" className="bg-red-600 hover:bg-red-700">Ver todas as notícias</Button>
+            <Button 
+              size="lg" 
+              className="bg-transparent hover:bg-transparent text-white hover:text-white"
+              variant="outline"
+            >
+                Ver todas as notícias
+              </Button>
           </Link>
         </div>
       </div>

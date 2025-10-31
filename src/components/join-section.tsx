@@ -131,7 +131,7 @@ export default function JoinSection() {
 
                                 <div className="text-center">
                                     <button
-                                        className={`w-full px-6 py-3 mt-6 font-bold text-white uppercase transition-all rounded-lg shadow-soft-md bg-gradient-to-tl from-gray-900 to-slate-800 hover:scale-102 hover:shadow-lg ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                        className={`w-full px-6 py-3 mt-6 font-bold text-white uppercase transition-all rounded-lg shadow-soft-md bg-red-600 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                                         type="submit"
                                         disabled={isLoading}
                                     >

@@ -12,13 +12,14 @@ export default function PrecatorioPage() {
 
   return (
     <main
-      style={{height: "calc(100vh - 68px)",
+      style={{
+        minHeight: "calc(100vh - 220px)",
         backgroundImage: "url('/simca2.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat"
       }}
-      className='relative bg-red-800'
+      className='relative bg-red-800 p-4'
     >
       <div className="container mx-auto flex flex-col gap-8 text-white">
         <h1 className="text-2xl font-bold mb-4">PRECATÓRIOS</h1>

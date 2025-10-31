@@ -10,7 +10,7 @@ export default function JuridicoPage() {
       }}
       className="bg-red-800 min-h-[calc(100vh-68px-148px)] flex items-stretch"
     >
-      <div className="container mx-auto gap-4 flex flex-col justify-center h-full text-white py-6 px-2 sm:py-8 sm:px-4 md:px-6 lg:px-8 w-full max-w-full sm:max-w-2xl md:max-w-3xl">
+      <div className="container mx-auto gap-4 flex flex-col justify-center h-full text-white py-6 px-4 sm:py-8 sm:px-4 md:px-6 lg:px-8 w-full max-w-full sm:max-w-2xl md:max-w-3xl">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">
           Jurídico
         </h2>
