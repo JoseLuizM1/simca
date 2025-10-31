@@ -1,13 +1,8 @@
-"use client"
-
+"use client";
 import React, { useState, useRef, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight, Camera } from "lucide-react"
-import Image from "next/image"
-import {
-  Card,
-  CardContent
-} from "@/components/ui/card"
+import { createClient } from '@/utils/supabase/client';
 
 interface Photo {
   id: number;
@@ -59,20 +54,28 @@ function PhotoGallery() {
 
   const loadPhotosFromSupabase = async () => {
     try {
-      const response = await fetch('/api/photos')
-      if (!response.ok) {
-        throw new Error('Erro ao carregar fotos')
+      const supabase = createClient();
+
+      const { data, error } = await supabase.from('photos').select('*');
+
+      if (error) {
+        console.error('Erro ao buscar fotos:', error)
+        return
       }
-      
-      const { sections: supabaseSections } = await response.json()
-      
-      // Substituir seções com fotos do Supabase
-      setSections(prevSections => {
-        return prevSections.map((section, index) => ({
-          ...section,
-          photos: supabaseSections[index]?.photos || []
-        }))
-      })
+
+      if (data) {
+        const updatedSections = sections.map((section) => {
+          const sectionPhotos = data
+            .filter((photo) => photo.alt_text === section.title)
+            .map((photo) => ({
+              id: photo.id,
+              src: photo.file_url,
+              alt: photo.description || 'Foto do SIMCA',
+            }))
+          return { ...section, photos: sectionPhotos }
+        })
+        setSections(updatedSections)
+      }
     } catch (error) {
       console.error('Erro ao carregar fotos:', error)
     }
@@ -157,25 +160,19 @@ function PhotoGallery() {
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
               {sections[activeSection].photos.map((photo) => (
-                <Card
+                <div 
                   key={photo.id}
-                  className="flex-shrink-0 w-80 hover:shadow-lg transition-shadow cursor-pointer group"
-                >
-                  <CardContent className="p-0">
-                    <div className="relative h-60 overflow-hidden rounded-t-lg">
-                      <Image
-                        src={photo.src || "/luta"}
-                        alt={photo.alt}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-                    </div>
-                    <div className="p-4">
-                      <h4 className="font-semibold text-gray-900 text-center">{photo.alt}</h4>
-                    </div>
-                  </CardContent>
-                </Card>
+                  style={{ 
+                    minWidth: '300px', 
+                    minHeight: '300px',
+                    flex: '0 0 auto', 
+                    borderRadius: '0.5rem', 
+                    overflow: 'hidden', 
+                    backgroundImage: `url(${photo.src})`, 
+                    backgroundSize: 'cover', 
+                    backgroundPosition: 'center', 
+                  }}
+                />
               ))}
             </div>
           </div>
