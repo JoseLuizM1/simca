@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    allowDevelopmentBuild: ['https://municipariosdecachoeirinha.com.br'],
-  },
   images: {
     remotePatterns: [
       {
