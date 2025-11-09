@@ -28,6 +28,7 @@ export default function NovaNoticia() {
     date: "",
     category: "",
     image: "",
+    subtitulo: "",
   });
   const [imagemFile, setImagemFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
@@ -128,6 +129,7 @@ export default function NovaNoticia() {
         description: form.description,
         date: form.date,
         category: form.category,
+        subtitulo: form.subtitulo,
         image: url.publicUrl,
       }]);
 
@@ -137,7 +139,7 @@ export default function NovaNoticia() {
         throw insertError;
       }
 
-      setForm({ title: "", description: "", date: "", category: "", image: "" });
+      setForm({ title: "", description: "", date: "", category: "", subtitulo: "", image: "" });
       setImagemFile(null);
       setLoading(false);
       setMessage("Notícia salva com sucesso!");
@@ -257,6 +259,14 @@ export default function NovaNoticia() {
               className="w-full" 
               value={form.title}
               onChange={(e) => setForm({ ...form, title: e.target.value })} 
+            />
+
+            <Input
+              type="text"
+              placeholder="Subtítulo da notícia"
+              className="w-full"
+              value={form.subtitulo}
+              onChange={(e) => setForm({ ...form, subtitulo: e.target.value })}
             />
 
             <Input 

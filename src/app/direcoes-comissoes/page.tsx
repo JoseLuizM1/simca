@@ -10,7 +10,7 @@ const pessoas = [
   { img: "/imagens/Daniela.jpg", cargo: "Coordenação de Formação e Cultura", nome: "Daniela de Souza" },
   { img: "/imagens/delmarina.jpg", cargo: "Conselho Deliberativo - 2° Titular", nome: "Delmarina Pereira" },
   { img: "/imagens/giani.jpg", cargo: "Conselho Deliberativo - 4° Suplente", nome: "Giani Geremias" },
-  { img: "/imagens/guilherme.jpg", cargo: "Suplente de Coordenação de Organização", nome: "Guilherme Runge" },
+  { img: "/imagens/guilherme.jpg", cargo: "Coordenação de Organização - Suplente", nome: "Guilherme Runge" },
   { img: "/imagens/ionice.jpg", cargo: "Coordenação de Aposentados", nome: "Ionice de Souza" },
   { img: "/imagens/janina.jpg", cargo: "Conselho Fiscal - Suplente", nome: "Janina Marques de Oliveira" },
   { img: "/imagens/Juraci.jpg", cargo: "Conselho Deliberativo - 1° Suplente", nome: "Juraci dos Santos" },
@@ -23,7 +23,7 @@ const pessoas = [
   { img: "/imagens/maria_elisabete.jpg", cargo: "Conselho Deliberativo - 5° Suplente", nome: "Maria Elisabete" },
   { img: "/imagens/patricia.jpg", cargo: "Conselho Deliberativo - 3° Suplente", nome: "Patrícia Rodrigues" },
   { img: "/imagens/rodrigo.jpg", cargo: "Coordenação de Comunicação e Imprensa", nome: "Rodrigo Lampert" },
-  { img: "/imagens/tania_coelho.jpg", cargo: "Suplente de Coordenação de Ação Sindical", nome: "Tânia Coelho" },
+  { img: "/imagens/tania_coelho.jpg", cargo: "Coordenação de Ação Sindical - Suplente", nome: "Tânia Coelho" },
   { img: "/imagens/tatiane.jpg", cargo: "Conselho Fiscal - Suplente", nome: "Tatiane Leal" },
   { img: "/imagens/verinha.jpg", cargo: "Conselho Deliberativo - 2° Suplente", nome: "Ines Soares Rodrigues" }
   

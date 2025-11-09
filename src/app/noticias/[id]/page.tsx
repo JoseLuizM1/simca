@@ -9,10 +9,12 @@ type Notice = {
   id?: string;
   title?: string;
   tittle?: string; // manter caso a API use esse campo
+  subtitulo?: string;
   date?: string;
   category?: string;
   image?: string;
   description?: string;
+  
 };
 
 export default function Page() {
@@ -64,7 +66,7 @@ export default function Page() {
 
   const formattedDate = (() => {
     if (!notice?.date) return '';
-    const parsed = new Date(notice.date);
+    const parsed = new Date(notice.date + 'T00:00:00');
     if (isNaN(parsed.getTime())) return '';
     return format(parsed, "dd 'de' MMMM 'de' yyyy", { locale: ptBR });
   })();
@@ -115,6 +117,11 @@ export default function Page() {
               />
             </div>
           )}
+          <div>
+            {notice?.subtitulo && (
+              <h3 className="text-xl font-semibold mb-4">{notice.subtitulo}</h3>
+            )}
+          </div>
 
           <div className="prose prose-lg max-w-none">
             <p className="whitespace-pre-wrap leading-relaxed">
