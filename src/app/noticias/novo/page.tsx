@@ -34,7 +34,7 @@ export default function NovaNoticia() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   
-  // Estados para upload no mural (novo)
+  // Estados para upload no mural
   const [isMuralDialogOpen, setIsMuralDialogOpen] = useState(false);
   const [muralFile, setMuralFile] = useState<File | null>(null);
   const [muralAltText, setMuralAltText] = useState("");
@@ -50,7 +50,7 @@ export default function NovaNoticia() {
     }
   };
 
-  // Função para lidar com seleção de imagem do mural (novo)
+  // Função para lidar com seleção de imagem do mural
   const handleMuralFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -60,43 +60,82 @@ export default function NovaNoticia() {
     }
   };
 
-  // Função para adicionar imagem ao mural (novo)
+  // Função para adicionar imagem ao mural (ATUALIZADA - upload direto)
   const handleAddToMural = async () => {
     if (muralFile && muralAltText && muralSection) {
       try {
         setMuralUploading(true);
         
-        const formData = new FormData();
-        formData.append('file', muralFile);
-        formData.append('section', muralSection);
-        formData.append('alt', muralAltText);
+        // Upload direto para Supabase Storage
+        const timestamp = Date.now();
+        const fileExtension = muralFile.name.split('.').pop();
+        const filename = `${timestamp}-${Math.random().toString(36).substring(2)}.${fileExtension}`;
+        
+        // Definir pasta baseada na seção
+        const sectionFolders = ['assembleias', 'enquadramento', 'luta', 'reunioes'];
+        const folder = sectionFolders[parseInt(muralSection)] || 'outros';
+        const filePath = `mural/${folder}/${filename}`;
 
-        const response = await fetch('/api/mural-upload', {
-          method: 'POST',
-          body: formData,
-        });
+        // 1. Upload da imagem para o Storage
+        const { error: uploadError } = await supabase.storage
+          .from('images')
+          .upload(filePath, muralFile, {
+            contentType: muralFile.type,
+            upsert: false
+          });
 
-        if (!response.ok) {
-          throw new Error('Erro no upload para o mural');
+        if (uploadError) {
+          console.error('Erro no upload:', uploadError);
+          throw new Error('Erro ao fazer upload da imagem');
         }
 
-        const result = await response.json();
+        // 2. Obter URL pública da imagem
+        const { data: { publicUrl } } = supabase.storage
+          .from('images')
+          .getPublicUrl(filePath);
 
-        // Reset do formulário do mural
+        // 3. Salvar informações na tabela photos
+        const { error: dbError } = await supabase
+          .from('photos')
+          .insert({
+            filename: filename,
+            original_name: muralFile.name,
+            alt_text: muralAltText,
+            section: parseInt(muralSection),
+            file_url: publicUrl
+          });
+
+        if (dbError) {
+          console.error('Erro no banco:', dbError);
+          
+          // Se houve erro no banco, remover arquivo do storage
+          await supabase.storage.from('images').remove([filePath]);
+          
+          throw new Error('Erro ao salvar informações no banco de dados');
+        }
+
+        // 4. Reset do formulário e fechar dialog
         resetMuralForm();
         setIsMuralDialogOpen(false);
 
         alert('Imagem adicionada ao mural com sucesso!');
+
       } catch (error) {
         console.error('Erro ao adicionar ao mural:', error);
-        alert('Erro ao adicionar imagem ao mural. Tente novamente.');
+        
+        // Mensagem de erro mais específica
+        const errorMessage = error instanceof Error 
+          ? error.message 
+          : 'Erro desconhecido ao adicionar imagem ao mural';
+        
+        alert(`Erro: ${errorMessage}`);
       } finally {
         setMuralUploading(false);
       }
     }
   };
 
-  // Reset do formulário do mural (novo)
+  // Reset do formulário do mural
   const resetMuralForm = () => {
     setMuralFile(null);
     setMuralAltText("");
