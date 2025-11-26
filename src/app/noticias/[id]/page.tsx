@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import { useNoticeStore } from "@/providers/store";
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { createClient } from "@/utils/supabase/client";
 
 type Notice = {
   id?: string;
@@ -25,6 +26,7 @@ export default function Page() {
   );
   const [loading, setLoading] = useState<boolean>(!notice);
   const [error, setError] = useState<string | null>(null);
+  const supabase = createClient();
 
   useEffect(() => {
     let mounted = true;
@@ -40,22 +42,22 @@ export default function Page() {
     // busca a notícia na API (implemente /api/noticias/[id] no servidor)
     setLoading(true);
     setError(null);
-    fetch(`/api/noticias/${id}`)
-      .then(async (res) => {
-        if (!res.ok) {
-          const text = await res.text().catch(() => res.statusText);
-          throw new Error(text || 'Erro ao carregar notícia');
+    
+    supabase
+      .from('notices')
+      .select('*')
+      .eq('id', id)
+      .single()
+      .then(({ data, error }) => {
+        if (!mounted) return;
+        
+        if (error || !data) {
+          setError('Notícia não encontrada.');
+          setLoading(false);
+          return;
         }
-        return res.json();
-      })
-      .then((data: Notice) => {
-        if (!mounted) return;
+        
         setNotice(data);
-        setLoading(false);
-      })
-      .catch(() => {
-        if (!mounted) return;
-        setError('Não foi possível carregar a notícia.');
         setLoading(false);
       });
 
