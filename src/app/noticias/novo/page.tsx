@@ -4,7 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { createClient } from "@/utils/supabase/client";
 import { Loader, Plus, Upload, X, Image as ImageIcon } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import {
   Dialog,
@@ -42,7 +43,54 @@ export default function NovaNoticia() {
   const [muralPreviewUrl, setMuralPreviewUrl] = useState<string | null>(null);
   const [muralUploading, setMuralUploading] = useState(false);
 
+  // Estados para verificação de autenticação
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const router = useRouter();
   const supabase = createClient();
+
+  // Verificar autenticação ao carregar a página
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const { data: { user }, error } = await supabase.auth.getUser();
+        
+        if (error || !user) {
+          // Usuário não autenticado, redirecionar para login
+          router.push('/login?redirectedFrom=/noticias/novo');
+          return;
+        }
+        
+        // Usuário autenticado
+        setIsAuthenticated(true);
+      } catch (error) {
+        console.error('Erro ao verificar autenticação:', error);
+        router.push('/login');
+      } finally {
+        setIsCheckingAuth(false);
+      }
+    };
+
+    checkAuth();
+  }, [router, supabase.auth]);
+
+  // Mostrar loading enquanto verifica autenticação
+  if (isCheckingAuth) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <Loader className="w-8 h-8 animate-spin mx-auto mb-4 text-red-600" />
+          <p className="text-gray-600">Verificando autenticação...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Se não autenticado, não renderizar nada (redirecionamento em andamento)
+  if (!isAuthenticated) {
+    return null;
+  }
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -65,6 +113,22 @@ export default function NovaNoticia() {
     if (muralFile && muralAltText && muralSection) {
       try {
         setMuralUploading(true);
+        
+        // VALIDAÇÕES DE SEGURANÇA
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/avif'];
+        const maxSize = 5 * 1024 * 1024; // 5MB
+        
+        if (!allowedTypes.includes(muralFile.type)) {
+          throw new Error('Tipo de arquivo não permitido. Use: JPEG, PNG, WebP ou AVIF');
+        }
+        
+        if (muralFile.size > maxSize) {
+          throw new Error('Arquivo muito grande. Tamanho máximo: 5MB');
+        }
+        
+        if (muralAltText.trim().length < 3) {
+          throw new Error('Texto alternativo deve ter pelo menos 3 caracteres');
+        }
         
         // Upload direto para Supabase Storage
         const timestamp = Date.now();
@@ -146,8 +210,38 @@ export default function NovaNoticia() {
   const handleSubmit = async () => {
     try {
       setMessage("");
+      
+      // VALIDAÇÕES DE SEGURANÇA
       if (!imagemFile) {
         alert("Por favor, selecione uma imagem.");
+        return;
+      }
+      
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/avif'];
+      const maxSize = 5 * 1024 * 1024; // 5MB
+      
+      if (!allowedTypes.includes(imagemFile.type)) {
+        setMessage('Tipo de arquivo não permitido. Use: JPEG, PNG, WebP ou AVIF');
+        return;
+      }
+      
+      if (imagemFile.size > maxSize) {
+        setMessage('Arquivo muito grande. Tamanho máximo: 5MB');
+        return;
+      }
+      
+      if (!form.title.trim() || !form.description.trim() || !form.date || !form.category) {
+        setMessage('Preencha todos os campos obrigatórios (título, descrição, data e categoria)');
+        return;
+      }
+      
+      if (form.title.trim().length < 5) {
+        setMessage('Título deve ter pelo menos 5 caracteres');
+        return;
+      }
+      
+      if (form.description.trim().length < 10) {
+        setMessage('Descrição deve ter pelo menos 10 caracteres');
         return;
       }
 
@@ -189,9 +283,32 @@ export default function NovaNoticia() {
     }
   };
 
+  // Função de logout
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      router.push('/login');
+    } catch (error) {
+      console.error('Erro ao fazer logout:', error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-4 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
+        {/* Header com botão de logout */}
+        <div className="mb-6 flex justify-between items-center">
+          <h1 className="text-2xl font-bold text-gray-900">Nova Notícia</h1>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handleLogout}
+            className="text-red-600 border-red-200 hover:bg-red-50"
+          >
+            Sair
+          </Button>
+        </div>
+
         {/* Botão para adicionar ao mural - acima do formulário (novo) */}
         <div className="mb-6 text-center">
           <Dialog open={isMuralDialogOpen} onOpenChange={setIsMuralDialogOpen}>
