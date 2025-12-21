@@ -6,7 +6,7 @@ export async function getNotices(limit: number = 3) {
   const { data, error } = await supabase
                                 .from("notices")
                                 .select("*")
-                                .order("date", { ascending: false })
+                                .order("created_at", { ascending: false })
                                 .limit(limit);
 
   if (error) {
