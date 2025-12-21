@@ -1,7 +1,8 @@
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 
 export async function getNotices(limit: number = 3) { 
-  const supabase = createClient();
+  const supabase = await createClient(cookies());
 
   const { data, error } = await supabase
                                 .from("notices")
