@@ -6,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, ArrowRight } from "lucide-react";
 import { getNotices } from "@/app/actions";
 
+export const revalidate = 0; // Desabilita cache
+
 type NewsItem = {
   id: string;
   title: string;

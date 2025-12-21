@@ -26,14 +26,17 @@ export default function NoticiasPage() {
 
   useEffect(() => {
     async function fetchNews() {
-      const { data: notices } = await supabase.from('notices').select('*');
+      const { data: notices } = await supabase
+        .from('notices')
+        .select('*')
+        .order('created_at', { ascending: false });
 
       if (notices) {
         setNews(notices);
       }
     }
     fetchNews();
-  }, []);
+  }, [supabase]);
 
   useEffect(() => {
     const checkIsMobile = () => setIsMobile(window.innerWidth < 640);
