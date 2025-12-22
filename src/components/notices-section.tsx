@@ -48,7 +48,7 @@ export default async function NoticesSection() {
               <CardHeader className="px-4 pt-4">
                 <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
                   <Calendar className="w-4 h-4" />
-                  {item.date}
+                  {item.date || 'Data indisponível'}
                 </div>
                 <CardTitle className="text-lg leading-tight">{item.title}</CardTitle>
               </CardHeader>

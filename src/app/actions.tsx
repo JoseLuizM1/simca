@@ -17,6 +17,6 @@ export async function getNotices(limit: number = 3) {
 
   return data.map((notice) => ({
     ...notice,
-    date: new Date(notice.created_at).toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" }),
+    date: notice.date ? notice.date.split('T')[0].split('-').reverse().join('/') : 'Data indisponível',
   }));
 }
