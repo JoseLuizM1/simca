@@ -1,6 +1,7 @@
 "use client";
 import { useMobileMenuStore } from "@/providers/store";
 import Link from "next/link";
+import { Download } from "lucide-react";
 
 const menus: { title: string; href: string; components?: any }[] = [
   {
@@ -88,6 +89,15 @@ export default function NavigationMenuMobileComponent() {
               </Link>
             )
           )}
+          <a
+            href="/precatorio/retroativo.xlsx"
+            download
+            onClick={() => setMobileOpen(false)}
+            className="mx-4 mt-2 inline-flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-2 font-semibold text-red-800 shadow"
+          >
+            <Download size={18} />
+            Baixar planilha
+          </a>
         </nav>
       </div>
   );

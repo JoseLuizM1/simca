@@ -33,6 +33,8 @@
 *.gif   binary
 *.ico   binary
 *.pdf   binary
+*.xlsx  binary
+*.xls   binary
 *.exe   binary
 *.dll   binary
 *.so    binary
